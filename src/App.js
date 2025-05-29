@@ -1,62 +1,91 @@
-import React, { Component } from 'react';
-import { Button, Flex } from "antd";
+import React, {Component} from 'react';
+import {Button, Flex} from "antd";
+import classes from "./App.module.scss";
 import { biometry, init } from '@telegram-apps/sdk';
+
 
 class App extends Component {
   state = {
-    isMounted: false,
-    isBiometryAvailable: false,
-    status: null,
-    token: null,
-  };
-
-  componentDidMount() {
-    init();
+    isMount: false,
+    notSupport: false,
+    isBiometryAccess: false,
+    status: false,
+    token: false,
   }
 
-  checkBiometry = async () => {
-    if (biometry.requestAccess.isAvailable()) {
-      const granted = await biometry.requestAccess();
-      this.setState({ isBiometryAvailable: granted });
-      if (granted) {
-        await this.authenticate();
-      }
-    }
-  };
-
-  authenticate = async () => {
-    if (biometry.authenticate.isAvailable()) {
-      try {
-        const { status, token } = await biometry.authenticate({
-          reason: 'Подтвердите вход',
-        });
-
-        this.setState({ status });
-        if (status === 'authorized') {
-          this.setState({ token });
-        } else {
-          console.log('Статус:', status);
-        }
-      } catch (error) {
-        console.error('Ошибка аутентификации:', error);
-      }
-    }
-  };
+  componentDidMount() {
+    init()
+  }
 
   render() {
-    const { isMounted, isBiometryAvailable, status, token } = this.state;
+    const {isMount, isBiometryAccess, status, token, notSupport} = this.state
+
+    const check = async () => {
+      if (biometry.requestAccess.isAvailable()) {
+        const granted = await biometry.requestAccess(); // boolean
+        this.setState({isBiometryAccess: granted});
+        await authenticate()
+      }
+    }
+
+    const authenticate = async () => {
+      if (biometry.authenticate.isAvailable()) {
+        const { status, token } = await biometry.authenticate({
+          reason: 'Пожалуйста!',
+        });
+
+        this.setState({
+          status
+        })
+        if (status === 'authorized') {
+          this.setState({
+            token
+          })
+        } else {
+          console.log('Not authorized');
+        }
+      }
+    }
+
+    const mountBiometry = async () => {
+      if (biometry.mount.isAvailable()) {
+        try {
+          const promise = biometry.mount();
+          biometry.isMounting(); // true
+          await promise;
+          biometry.isMounting(); // false
+          biometry.isMounted(); // true
+          this.setState({
+            isMount: biometry.isMounted(),
+            notSupport: true
+          })
+
+        } catch (err) {
+          biometry.mountError(); // equals "err"
+          biometry.isMounting(); // false
+          biometry.isMounted(); // false
+        }
+      }
+    }
 
     return (
-      <div>
+      <div className={classes.App}>
         <Flex justify="center" vertical>
           <p>
-            <b>Состояние:</b><br />
-            Биометрия доступна: {isBiometryAvailable.toString()}<br />
-            Статус: {status || 'неизвестно'}<br />
-            Токен: {token || 'нет'}
+            <b>STATE:</b> <br/>
+            isMount: {isMount.toString()}<br/>
+            notSupport: {notSupport.toString()}<br/>
+            isBiometryAccess: {isBiometryAccess.toString()}<br/>
+            status: {status.toString()}<br/>
+            token: {token.toString()}
+          </p>
+          <p>
+            {status && ("Статус: " + status.toString())}<br/>
+            {token && ("Токен: " + token.toString())}
           </p>
           <Flex gap={20} vertical>
-            <Button onClick={this.checkBiometry}>Проверить биометрию</Button>
+            <Button size="large" onClick={() => mountBiometry()}>Смонтировать библиотеку</Button>
+            <Button size="large" onClick={() => check()}>Проверить биометрию</Button>
           </Flex>
         </Flex>
       </div>
