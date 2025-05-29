@@ -73,11 +73,19 @@ class App extends Component {
       <div className={classes.App}>
         <Flex justify="center" vertical>
           <p>
+            <b>STATE:</b> <br/>
+            isMount: {this.state.isMount}<br/>
+            notSupport: {this.state.notSupport}<br/>
+            isBiometryAccess: {this.state.isBiometryAccess}<br/>
+            status: {this.state.status}<br/>
+            token: {this.state.token}
+          </p>
+          <p>
             {notSupport ? "Биометрия поддерживается" : "Биометрия не поддерживается"}<br/>
-            {isMount && "Компонент смонтирован"}<br/>
+            {isMount ? "Компонент смонтирован" : "Компонент не смонтирован"}<br/>
             {isBiometryAccess && "Доступ к биометрии доступен"}<br/>
-            {status && ("Статус " + status)}<br/>
-            {token && ("Токен " + token)}
+            {status && ("Статус: " + status)}<br/>
+            {token && ("Токен: " + token)}
           </p>
           <Button onClick={check}>Проверить биометрию</Button>
         </Flex>
