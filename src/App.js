@@ -34,7 +34,7 @@ class App extends Component {
           reason: 'Пожалуйста!',
         });
 
-        /*this.setState({
+        this.setState({
           status
         })
         if (status === 'authorized') {
@@ -43,7 +43,7 @@ class App extends Component {
           })
         } else {
           console.log('Not authorized');
-        }*/
+        }
       }
     }
 
