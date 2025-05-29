@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Flex} from "antd";
 import classes from "./App.module.scss";
-import { biometry } from '@telegram-apps/sdk';
+import { biometry, init } from '@telegram-apps/sdk';
 
 
 class App extends Component {
@@ -11,6 +11,10 @@ class App extends Component {
     isBiometryAccess: false,
     status: false,
     token: false,
+  }
+
+  componentDidMount() {
+    init()
   }
 
   render() {
@@ -60,24 +64,23 @@ class App extends Component {
           biometry.mountError(); // equals "err"
           biometry.isMounting(); // false
           biometry.isMounted(); // false
-          console.log("Error", biometry.isMounted())
+          alert("Error", biometry.isMounted())
         }
       } else {
-
+        alert("Error: Метод isAvailable не поддерживается")
       }
     }
-
 
     return (
       <div className={classes.App}>
         <Flex justify="center" vertical>
           <p>
             <b>STATE:</b> <br/>
-            isMount: {this.state.isMount}<br/>
-            notSupport: {this.state.notSupport}<br/>
-            isBiometryAccess: {this.state.isBiometryAccess}<br/>
-            status: {this.state.status}<br/>
-            token: {this.state.token}
+            isMount: {isMount.toString()}<br/>
+            notSupport: {notSupport.toString()}<br/>
+            isBiometryAccess: {isBiometryAccess.toString()}<br/>
+            status: {status.toString()}<br/>
+            token: {token.toString()}
           </p>
           <p>
             {notSupport ? "Биометрия поддерживается" : "Биометрия не поддерживается"}<br/>
@@ -86,8 +89,11 @@ class App extends Component {
             {status && ("Статус: " + status)}<br/>
             {token && ("Токен: " + token)}
           </p>
-          <Button onClick={mountBiometry}>Смонтировать библиотеку</Button>
-          <Button onClick={check}>Проверить биометрию</Button>
+          <Flex gap={20} vertical>
+            <Button size="large" onClick={() => mountBiometry()}>Смонтировать библиотеку</Button>
+            <Button size="large" onClick={() => check()}>Проверить биометрию</Button>
+          </Flex>
+
         </Flex>
       </div>
     );
