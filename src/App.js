@@ -33,17 +33,6 @@ class App extends Component {
         const { status, token } = await biometry.authenticate({
           reason: 'Пожалуйста!',
         });
-
-        this.setState({
-          status
-        })
-        if (status === 'authorized') {
-          this.setState({
-            token
-          })
-        } else {
-          console.log('Not authorized');
-        }
       }
     }
 
