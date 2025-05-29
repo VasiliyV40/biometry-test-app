@@ -67,7 +67,6 @@ class App extends Component {
       }
     }
 
-    mountBiometry()
 
     return (
       <div className={classes.App}>
@@ -87,6 +86,7 @@ class App extends Component {
             {status && ("Статус: " + status)}<br/>
             {token && ("Токен: " + token)}
           </p>
+          <Button onClick={mountBiometry}>Смонтировать библиотеку</Button>
           <Button onClick={check}>Проверить биометрию</Button>
         </Flex>
       </div>
