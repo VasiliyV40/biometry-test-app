@@ -64,10 +64,7 @@ class App extends Component {
           biometry.mountError(); // equals "err"
           biometry.isMounting(); // false
           biometry.isMounted(); // false
-          alert("Error", biometry.isMounted())
         }
-      } else {
-        alert("Error: Метод isAvailable не поддерживается")
       }
     }
 
@@ -83,17 +80,13 @@ class App extends Component {
             token: {token.toString()}
           </p>
           <p>
-            {notSupport ? "Биометрия поддерживается" : "Биометрия не поддерживается"}<br/>
-            {isMount ? "Компонент смонтирован" : "Компонент не смонтирован"}<br/>
-            {isBiometryAccess && "Доступ к биометрии доступен"}<br/>
-            {status && ("Статус: " + status)}<br/>
-            {token && ("Токен: " + token)}
+            {status && ("Статус: " + status.toString())}<br/>
+            {token && ("Токен: " + token.toString())}
           </p>
           <Flex gap={20} vertical>
             <Button size="large" onClick={() => mountBiometry()}>Смонтировать библиотеку</Button>
             <Button size="large" onClick={() => check()}>Проверить биометрию</Button>
           </Flex>
-
         </Flex>
       </div>
     );
