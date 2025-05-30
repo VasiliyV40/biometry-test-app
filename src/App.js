@@ -38,7 +38,7 @@ class App extends Component {
 
         if (status === 'authorized') {
           console.log(`Authorized. Token: ${token}`);
-          this.setState({status: "Authorized"})
+          //this.setState({status: "Authorized"})
         } else {
           console.log('Not authorized');
         }
