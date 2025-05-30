@@ -39,7 +39,7 @@ class App extends Component {
         });
         if (status === 'authorized') {
           //setToken(status, token)
-          alert(`Authorized. Token: ${token}`);
+          console.log(`Authorized. Token: ${token}`);
         } else {
           console.log('Not authorized');
         }
