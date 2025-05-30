@@ -31,7 +31,7 @@ class App extends Component {
         reason: 'Пожалуйста!',
       });
 
-      this.setState({ status, token }); // <-- ключевая строка
+      //this.setState({ status, token }); // <-- ключевая строка
 
       if (status === 'authorized') {
         console.log(`Authorized. Token: ${token}`);
