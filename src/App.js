@@ -51,12 +51,14 @@ class App extends Component {
         biometry.isMounted(); // true
         this.setState({
           isMount: biometry.isMounted(),
-          notSupport: true
         });
       } catch (err) {
         biometry.mountError(); // equals "err"
         biometry.isMounting(); // false
         biometry.isMounted(); // false
+        this.setState({
+          notSupport: true
+        });
       }
     }
   }
