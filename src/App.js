@@ -73,7 +73,7 @@ class App extends Component {
             notSupport: {notSupport.toString()}<br/>
             isBiometryAccess: {isBiometryAccess.toString()}<br/>
             status: {status.toString()}<br/>
-            token: {token.length > 0 ? token.slice(0, 20) + '...' : ''}
+            token: {token.length > 0 ? token.slice(0, 5) + '...' : ''}
           </p>
           <Flex gap={20} vertical>
             <Button size="large" onClick={() => this.mountBiometry()}>Смонтировать библиотеку</Button>
