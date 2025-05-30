@@ -39,7 +39,7 @@ class App extends Component {
           reason: 'Пожалуйста!',
         });
         if (status === 'authorized') {
-          //setToken(status, token)
+          setToken(status, token)
           console.log(`Authorized. Token: ${token}`);
         } else {
           console.log('Not authorized');
@@ -57,13 +57,15 @@ class App extends Component {
           biometry.isMounted(); // true
           this.setState({
             isMount: biometry.isMounted(),
-            notSupport: true
           })
 
         } catch (err) {
           biometry.mountError(); // equals "err"
           biometry.isMounting(); // false
           biometry.isMounted(); // false
+          this.setState({
+            notSupport: true
+          })
         }
       }
     }
@@ -77,7 +79,7 @@ class App extends Component {
             notSupport: {notSupport.toString()}<br/>
             isBiometryAccess: {isBiometryAccess.toString()}<br/>
             status: {status.toString()}<br/>
-            token: {token.toString()}
+            token: {token.slice(0,10).toString()}
           </p>
           <Flex gap={20} vertical>
             <Button size="large" onClick={() => mountBiometry()}>Смонтировать библиотеку!</Button>
