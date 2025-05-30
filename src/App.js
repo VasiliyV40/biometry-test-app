@@ -69,7 +69,7 @@ class App extends Component {
             isBiometryAccess: {isBiometryAccess.toString()}<br/>
           </p>
           <Flex gap={20} vertical>
-            <Button size="large" onClick={() => mountBiometry()}>Смонтировать библиотеку!</Button>
+            <Button size="large" onClick={() => mountBiometry()}>Смонтировать библиотеку</Button>
             <Button size="large" onClick={() => check()}>Проверить биометрию</Button>
           </Flex>
         </Flex>
