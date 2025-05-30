@@ -80,10 +80,9 @@ class App extends Component {
           </p>
           <p>
             {status && ("Статус: " + status.toString())}<br/>
-            {token && ("Токен: " + token.toString())}
           </p>
           <Flex gap={20} vertical>
-            <Button size="large" onClick={() => mountBiometry()}>Смонтировать библиотеку!!!</Button>
+            <Button size="large" onClick={() => mountBiometry()}>Смонтировать библиотеку</Button>
             <Button size="large" onClick={() => check()}>Проверить биометрию</Button>
           </Flex>
         </Flex>
