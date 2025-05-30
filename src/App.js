@@ -34,6 +34,9 @@ class App extends Component {
           reason: 'Пожалуйста!',
         });
         if (status === 'authorized') {
+          this.setState({
+            token, status
+          })
           console.log(`Authorized. Token: ${token}`);
         } else {
           console.log('Not authorized');
