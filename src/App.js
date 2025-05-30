@@ -73,10 +73,10 @@ class App extends Component {
             notSupport: {notSupport.toString()}<br/>
             isBiometryAccess: {isBiometryAccess.toString()}<br/>
             status: {status.toString()}<br/>
-            token: {token ? token.slice(0, 10) + '...' : ''}
+            token: {token.length > 0 ? token.slice(0, 20) + '...' : ''}
           </p>
           <Flex gap={20} vertical>
-            <Button size="large" onClick={() => this.mountBiometry()}>Смонтировать библиотеку!!!!</Button>
+            <Button size="large" onClick={() => this.mountBiometry()}>Смонтировать библиотеку</Button>
             <Button size="large" onClick={() => this.check()}>Проверить биометрию</Button>
           </Flex>
         </Flex>
