@@ -28,17 +28,12 @@ class App extends Component {
       }
     }
 
-    const setToken = (status, token) => {
-      this.setState({status: status, token: token})
-    }
-
     const authenticate = async () => {
       if (biometry.authenticate.isAvailable()) {
         const { status, token } = await biometry.authenticate({
           reason: 'Пожалуйста!',
         });
         if (status === 'authorized') {
-          //setToken(status, token)
           console.log(`Authorized. Token: ${token}`);
         } else {
           console.log('Not authorized');
