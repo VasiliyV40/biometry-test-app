@@ -76,7 +76,7 @@ class App extends Component {
             token: {token.toString()}
           </p>
           <Flex gap={20} vertical>
-            <Button size="large" onClick={() => this.mountBiometry()}>Смонтировать библиотеку!</Button>
+            <Button size="large" onClick={() => this.mountBiometry()}>Смонтировать библиотеку!!!</Button>
             <Button size="large" onClick={() => this.check()}>Проверить биометрию</Button>
           </Flex>
         </Flex>
