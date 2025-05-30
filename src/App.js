@@ -9,8 +9,8 @@ class App extends Component {
     isMount: false,
     notSupport: true,
     isBiometryAccess: false,
-    status: false,
-    token: false,
+    status: "",
+    token: "",
   }
 
   componentDidMount() {
@@ -28,15 +28,17 @@ class App extends Component {
       }
     }
 
+    const setToken = (status, token) => {
+      this.setState({status, token})
+    }
+
     const authenticate = async () => {
       if (biometry.authenticate.isAvailable()) {
         const { status, token } = await biometry.authenticate({
           reason: 'Пожалуйста!',
         });
         if (status === 'authorized') {
-          this.setState({
-            token, status
-          })
+          setToken(status, token)
           console.log(`Authorized. Token: ${token}`);
         } else {
           console.log('Not authorized');
@@ -81,7 +83,7 @@ class App extends Component {
             {token && ("Токен: " + token.toString())}
           </p>
           <Flex gap={20} vertical>
-            <Button size="large" onClick={() => mountBiometry()}>Смонтировать библиотеку!</Button>
+            <Button size="large" onClick={() => mountBiometry()}>Смонтировать библиотеку!!</Button>
             <Button size="large" onClick={() => check()}>Проверить биометрию</Button>
           </Flex>
         </Flex>
