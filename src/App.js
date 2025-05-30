@@ -17,8 +17,6 @@ class App extends Component {
     init()
   }
 
-
-
   render() {
     const {isMount, isBiometryAccess, status, token, notSupport} = this.state
 
@@ -36,8 +34,6 @@ class App extends Component {
           reason: 'Пожалуйста!',
         });
 
-        //this.setState({ status, token }); // <-- ключевая строка
-
         if (status === 'authorized') {
           console.log(`Authorized. Token: ${token}`);
         } else {
@@ -54,16 +50,11 @@ class App extends Component {
           await promise;
           biometry.isMounting(); // false
           biometry.isMounted(); // true
-          this.setState({
-            isMount: biometry.isMounted(),
-          });
         } catch (err) {
           biometry.mountError(); // equals "err"
           biometry.isMounting(); // false
           biometry.isMounted(); // false
-          this.setState({
-            notSupport: true
-          });
+
         }
       }
     }
@@ -76,8 +67,6 @@ class App extends Component {
             isMount: {isMount.toString()}<br/>
             notSupport: {notSupport.toString()}<br/>
             isBiometryAccess: {isBiometryAccess.toString()}<br/>
-            status: {status.toString()}<br/>
-            {/*token: {token.length > 0 ? token.slice(0, 10) + '...' : ''}*/}
           </p>
           <Flex gap={20} vertical>
             <Button size="large" onClick={() => mountBiometry()}>Смонтировать библиотеку!</Button>
