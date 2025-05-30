@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {Button, Flex} from "antd";
 import classes from "./App.module.scss";
 import { biometry, init } from '@telegram-apps/sdk';
+import {setState} from "@telegram-apps/sdk/dist/dts/scopes/components/viewport/signals";
 
 
 class App extends Component {
@@ -37,6 +38,7 @@ class App extends Component {
 
         if (status === 'authorized') {
           console.log(`Authorized. Token: ${token}`);
+          this.setState({status})
         } else {
           console.log('Not authorized');
         }
