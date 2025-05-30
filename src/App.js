@@ -17,54 +17,56 @@ class App extends Component {
     init()
   }
 
-  check = async () => {
-    if (biometry.requestAccess.isAvailable()) {
-      const granted = await biometry.requestAccess(); // boolean
-      this.setState({ isBiometryAccess: granted });
-      await this.authenticate();
-    }
-  }
 
-  authenticate = async () => {
-    if (biometry.authenticate.isAvailable()) {
-      const { status, token } = await biometry.authenticate({
-        reason: 'Пожалуйста!',
-      });
-
-      //this.setState({ status, token }); // <-- ключевая строка
-
-      if (status === 'authorized') {
-        console.log(`Authorized. Token: ${token}`);
-      } else {
-        console.log('Not authorized');
-      }
-    }
-  }
-
-  mountBiometry = async () => {
-    if (biometry.mount.isAvailable()) {
-      try {
-        const promise = biometry.mount();
-        biometry.isMounting(); // true
-        await promise;
-        biometry.isMounting(); // false
-        biometry.isMounted(); // true
-        this.setState({
-          isMount: biometry.isMounted(),
-        });
-      } catch (err) {
-        biometry.mountError(); // equals "err"
-        biometry.isMounting(); // false
-        biometry.isMounted(); // false
-        this.setState({
-          notSupport: true
-        });
-      }
-    }
-  }
 
   render() {
     const {isMount, isBiometryAccess, status, token, notSupport} = this.state
+
+    const check = async () => {
+      if (biometry.requestAccess.isAvailable()) {
+        const granted = await biometry.requestAccess(); // boolean
+        this.setState({ isBiometryAccess: granted });
+        await authenticate();
+      }
+    }
+
+    const authenticate = async () => {
+      if (biometry.authenticate.isAvailable()) {
+        const { status, token } = await biometry.authenticate({
+          reason: 'Пожалуйста!',
+        });
+
+        //this.setState({ status, token }); // <-- ключевая строка
+
+        if (status === 'authorized') {
+          console.log(`Authorized. Token: ${token}`);
+        } else {
+          console.log('Not authorized');
+        }
+      }
+    }
+
+    const mountBiometry = async () => {
+      if (biometry.mount.isAvailable()) {
+        try {
+          const promise = biometry.mount();
+          biometry.isMounting(); // true
+          await promise;
+          biometry.isMounting(); // false
+          biometry.isMounted(); // true
+          this.setState({
+            isMount: biometry.isMounted(),
+          });
+        } catch (err) {
+          biometry.mountError(); // equals "err"
+          biometry.isMounting(); // false
+          biometry.isMounted(); // false
+          this.setState({
+            notSupport: true
+          });
+        }
+      }
+    }
 
     return (
       <div className={classes.App}>
@@ -78,8 +80,8 @@ class App extends Component {
             {/*token: {token.length > 0 ? token.slice(0, 10) + '...' : ''}*/}
           </p>
           <Flex gap={20} vertical>
-            <Button size="large" onClick={() => this.mountBiometry()}>Смонтировать библиотеку!</Button>
-            <Button size="large" onClick={() => this.check()}>Проверить биометрию</Button>
+            <Button size="large" onClick={() => mountBiometry()}>Смонтировать библиотеку!</Button>
+            <Button size="large" onClick={() => check()}>Проверить биометрию</Button>
           </Flex>
         </Flex>
       </div>
