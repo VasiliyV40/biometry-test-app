@@ -1,3 +1,4 @@
+
 import React, {Component} from 'react';
 import {Button, Flex} from "antd";
 import classes from "./App.module.scss";
@@ -17,25 +18,28 @@ class App extends Component {
     init()
   }
 
-
   render() {
     const {isMount, isBiometryAccess, status, token, notSupport} = this.state
 
     const check = async () => {
       if (biometry.requestAccess.isAvailable()) {
         const granted = await biometry.requestAccess(); // boolean
-        this.setState({ isBiometryAccess: granted });
-        await authenticate();
+        this.setState({isBiometryAccess: granted});
+        await authenticate()
       }
+    }
+
+    const setToken = (status, token) => {
+      this.setState({status: status, token: token})
     }
 
     const authenticate = async () => {
       if (biometry.authenticate.isAvailable()) {
         const { status, token } = await biometry.authenticate({
-          reason: 'Please!',
+          reason: 'Пожалуйста!',
         });
-
         if (status === 'authorized') {
+          //setToken(status, token)
           console.log(`Authorized. Token: ${token}`);
         } else {
           console.log('Not authorized');
@@ -51,11 +55,15 @@ class App extends Component {
           await promise;
           biometry.isMounting(); // false
           biometry.isMounted(); // true
+          this.setState({
+            isMount: biometry.isMounted(),
+            notSupport: true
+          })
+
         } catch (err) {
           biometry.mountError(); // equals "err"
           biometry.isMounting(); // false
           biometry.isMounted(); // false
-
         }
       }
     }
@@ -68,9 +76,11 @@ class App extends Component {
             isMount: {isMount.toString()}<br/>
             notSupport: {notSupport.toString()}<br/>
             isBiometryAccess: {isBiometryAccess.toString()}<br/>
+            status: {status.toString()}<br/>
+            token: {token.toString()}
           </p>
           <Flex gap={20} vertical>
-            <Button size="large" onClick={() => mountBiometry()}>Смонтировать библиотеку</Button>
+            <Button size="large" onClick={() => mountBiometry()}>Смонтировать библиотеку!</Button>
             <Button size="large" onClick={() => check()}>Проверить биометрию</Button>
           </Flex>
         </Flex>
