@@ -17,6 +17,7 @@ class App extends Component {
     init()
   }
 
+
   render() {
     const {isMount, isBiometryAccess, status, token, notSupport} = this.state
 
@@ -31,7 +32,7 @@ class App extends Component {
     const authenticate = async () => {
       if (biometry.authenticate.isAvailable()) {
         const { status, token } = await biometry.authenticate({
-          reason: 'Пожалуйста!',
+          reason: 'Please!',
         });
 
         if (status === 'authorized') {
