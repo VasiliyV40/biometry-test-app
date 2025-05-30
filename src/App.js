@@ -33,6 +33,11 @@ class App extends Component {
         const { status, token } = await biometry.authenticate({
           reason: 'Пожалуйста!',
         });
+        if (status === 'authorized') {
+          console.log(`Authorized. Token: ${token}`);
+        } else {
+          console.log('Not authorized');
+        }
       }
     }
 
@@ -73,7 +78,7 @@ class App extends Component {
             {token && ("Токен: " + token.toString())}
           </p>
           <Flex gap={20} vertical>
-            <Button size="large" onClick={() => mountBiometry()}>Смонтировать библиотеку</Button>
+            <Button size="large" onClick={() => mountBiometry()}>Смонтировать библиотеку!</Button>
             <Button size="large" onClick={() => check()}>Проверить биометрию</Button>
           </Flex>
         </Flex>
